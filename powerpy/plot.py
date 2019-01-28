@@ -2,6 +2,9 @@
  power.py
  Jim Mahoney | cs.marlboro.college | Jan 2019 | MIT License 
 """
+import matplotlib.pyplot as plt
+import statistics
+import numpy as np
 
 def power1(a, b, c):
     """ Return a**b mod c for integer a, b, c
@@ -19,7 +22,7 @@ def power1(a, b, c):
         result *= a #2 steps
         result = result % c #2 steps
         count += 5
-    return result, count
+    return count
 
 def power2(a, b, c):
     """ Return a**b for integer a, b 
@@ -36,21 +39,30 @@ def power2(a, b, c):
     result = 1
     pow = b
     fact = a
+    count = 3
     while pow > 0:
         if pow & 1:
             result = (result * fact) % c
         pow //= 2
         fact = (fact * fact) % c
-    return result
+        count += 1
+    return count
 
 def main():
     res1 = []
-    a = 2
-    c = 2
-    for b in range(1, 100):
-        res1.append(power1(a, b, c))
+    res2 = []
+    a = 5
+    c = 10
+    for b in range(1, 10000):
+        res1.append(power2(a, b, c))
 
-    print(res1)
+    for b in range(1, 10000):
+        res2.append(power1(a, b, c))
+
+    plt.plot(res2)
+    plt.show()
+    plt.plot(res1)
+    plt.show()
 
 if __name__ == '__main__':
     # import doctest
