@@ -1,6 +1,7 @@
 """ 
  power.py
  Jim Mahoney | cs.marlboro.college | Jan 2019 | MIT License 
+ Modified by Cyrus Burt
 """
 import matplotlib.pyplot as plt
 import statistics
@@ -53,15 +54,22 @@ def main():
     res2 = []
     a = 5
     c = 10
-    for b in range(1, 10000):
+
+    for b in range(1, 1000):
         res1.append(power2(a, b, c))
 
-    for b in range(1, 10000):
+    for b in range(1, 1000):
         res2.append(power1(a, b, c))
 
-    plt.plot(res2)
-    plt.show()
+    ns = np.array(range(1,len(res1)))
+    nln = np.log(ns)
+
+    fig1 = plt.figure(1)
     plt.plot(res1)
+    plt.plot(nln)
+
+    fig2 = plt.figure(2)
+    plt.plot(res2)
     plt.show()
 
 if __name__ == '__main__':
