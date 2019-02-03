@@ -43,7 +43,7 @@ class node():
         self.value = value
 
     def subtreelen(self):
-        if (not self.right) and (not self.left): #This logic could be cut down, couldn't figure out how
+        if (not self.right) and (not self.left): #I think this logic could be cut down, couldn't figure out how
             return 0
         if not self.left:
             return 1
@@ -53,26 +53,32 @@ class node():
             return 2 + self.left.subtreelen() + self.right.subtreelen()
 
 class tree():
-    def __init__(self, values):
-        self.last = None
-        self.first = node(values[0]) 
-        for i in values:
-            self.push(i)
+    def __init__(self, root):
+        self.first = node(root)
+        self.current = self.first
 
-    def push(self, value):
-        new_node = node(value)
+    def pushl(self, value):
+        self.current.left = value
 
-        # if self.last.left == node:
-        #     self.last.left = new_node
-        # if self.last.right == node:
-        #     self.last.right = new_node
-    
-        self.last = new_node
+    def pushr(self, value):
+        self.current.right = value
 
-    def __len__(self):
+    def len(self):
         return 1 + self.first.subtreelen()
 
 
 if __name__ == '__main__':
     import doctest
     doctest.testmod()
+
+x1 = node(5)
+x2 = node(1)
+x3 = node(5)
+x3.left = x1
+x3.right = x2
+
+y1 = node(9)
+y2 = node(6)
+y3 = node(7)
+y3.left = y1
+y3.right = y2
