@@ -63,6 +63,15 @@ class tree():
     def pushr(self, value):
         self.current.right = value
 
+    def push(self, value): #value should be a node
+        if self.current.left == None:
+            self.pushl(value)
+        elif self.current.right == None:
+            self.pushr(value)
+        else:
+            self.current = self.current.left
+            self.push(value)
+
     def len(self):
         return 1 + self.first.subtreelen()
 
@@ -70,15 +79,3 @@ class tree():
 if __name__ == '__main__':
     import doctest
     doctest.testmod()
-
-x1 = node(5)
-x2 = node(1)
-x3 = node(5)
-x3.left = x1
-x3.right = x2
-
-y1 = node(9)
-y2 = node(6)
-y3 = node(7)
-y3.left = y1
-y3.right = y2
