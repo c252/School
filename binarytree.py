@@ -42,6 +42,10 @@ class node():
         self.right = None
         self.value = value
 
+    def pushl(self, value):
+        self.current.left = node(value)
+
+
     def subtreelen(self):
         if (not self.right) and (not self.left): #I think this logic could be cut down, couldn't figure out how
             return 0
@@ -58,24 +62,35 @@ class tree():
         self.current = self.first
 
     def pushl(self, value):
-        self.current.left = value
+        self.current.left = node(value)
 
     def pushr(self, value):
-        self.current.right = value
+        self.current.right = node(value)
 
-    def push(self, value): #value should be a node
-        if self.current.left == None:
-            self.pushl(value)
-        elif self.current.right == None:
-            self.pushr(value)
-        else:
-            self.current = self.current.left
-            self.push(value)
+    """
+        #my attempt at making logic to push to the tree
+        #unfortunately I got stuck and a bit busy :(
 
-    def len(self):
+        def push(self, value): #value should be a node 
+            if self.current.left == None:
+                self.pushl(value)
+            elif self.current.right == None:
+                self.pushr(value)
+            else:
+                self.current = self.current.left
+                self.push(value)
+    """
+    def __len__(self):
         return 1 + self.first.subtreelen()
 
 
 if __name__ == '__main__':
     import doctest
     doctest.testmod()
+
+t = tree("a")
+t.pushl("b")
+t.pushr("c")
+t.left.
+
+print(len(t))
