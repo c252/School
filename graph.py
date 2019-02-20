@@ -1,5 +1,8 @@
 """
 |Jim Mahoney|
+
+|Modified by Cyrus Burt|
+
  graph.py
 
  Playing around with a graph and 
@@ -110,9 +113,11 @@ def edges_to_dot(edges, graph_or_digraph='graph', arrow='--',
         result += '{{rank=same; {}}};\n'.format(' '.join(same))
     return result + '}\n'
 
-def edges_to_graph(edges):
-    """ Return graph adjancency structure i.e. {node: {neighbors}} """
-    graph = {}
+def edges_to_graph(graph_in, edges):
+    """ 
+    Modified so that a graph can have edges appended to it
+    Return graph adjancency structure i.e. {node: {neighbors}} """
+    graph = graph_in
     for (a, b) in edges:
         for (node, neighbor) in ((a, b), (b, a)):
             if not node in graph:
@@ -142,39 +147,41 @@ def search(graph, start, which, function):
             if not candidate in visited and not candidate in fringe:
                 fringe.push(candidate)
 
-def main():
-    """ Playing around with a tree. """
+# def main():
+#     """ Playing around with a tree. """
+#     #Graph from problem 5.1
+    # edges = [ ('a', 'b'), ('a', 'd'), ('a', 'i'),
+    #             ('b', 'd'), ('b', 'c'), ('b', 'e'),
+    #             ('c', 'f'), ('c', 'e'),
+    #             ('d', 'e'), ('d', 'g'),
+    #             ('e', 'g'), ('e', 'h'), ('e', 'f'),
+    #             ('f', 'h'),
+    #             ('g', 'h'), ('g', 'j'), ('g', 'i'),
+    #             ('h', 'j'),
+    #             ('i', 'j') ] 
 
-    # Define the graph with edge tuples.
-    edges = [ ('a', 'b'), ('a', 'c'), ('a', 'd'),
-              ('b', 'e'), ('b', 'f'),
-              ('c', 'g'), ('c', 'h'),
-              ('f', 'c'), ('f', 'g'),
-              ('h', 'd') ]
+#     # Show a graphviz representation.
+#     print(edges_to_dot(edges))
 
-    # Show a graphviz representation.
-    print(edges_to_dot(edges))
+#     # Convert to a dictionary of parent nodes and their children.
+#     graph = edges_to_graph(edges)
+#     print('-- graph node:node --')
+#     prettyprint(graph)
+#     print()
 
-    # Convert to a dictionary of parent nodes and their children.
-    graph = edges_to_graph(edges)
-    print('-- graph node:node --')
-    prettyprint(graph)
-    print()
+#     # Do a depthsearch starting at node 'a' and show the traverseral order.
+#     print('-- depth-first search --')
+#     record1 = Recorder()
+#     search(graph, 'a', 'depth', record1)
+#     print(record1.replay())
+#     print()
 
-    # Do a depthsearch starting at node 'a' and show the traverseral order.
-    print('-- depth-first search --')
-    record1 = Recorder()
-    search(graph, 'a', 'depth', record1)
-    print(record1.replay())
-    print()
-
-    # Do a breadth search starting at node 'a' and show the traverseral order.
-    print('-- breadth-first search --')
-    record2 = Recorder()
-    search(graph, 'a', 'breadth', record2)
-    print(record2.replay())
+#     # Do a breadth search starting at node 'a' and show the traverseral order.
+#     print('-- breadth-first search --')
+#     record2 = Recorder()
+#     search(graph, 'a', 'breadth', record2)
+#     print(record2.replay())
     
 if __name__ == '__main__':
     import doctest
     doctest.testmod()
-    main()
