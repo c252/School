@@ -48,8 +48,8 @@ def moves_to_edges(pos, available):
     return edges
 
 def main():
-    startx = 4
-    starty = 4
+    startx = 2
+    starty = 2
     x = startx
     y = starty
 
@@ -63,16 +63,19 @@ def main():
     for i in avail:
         print(np.where(b == i))
     """
-    edges1 = moves_to_edges(b[x][y], avail)
-    graph = {}
-    graph = edges_to_graph(graph, edges1)
-
-    x, y = tuple(map(int, np.where(b == avail[0])))
-    avail = get_moves(b, x, y)
     edges = moves_to_edges(b[x][y], avail)
+    graph = {}
     graph = edges_to_graph(graph, edges)
 
-    print(edges_to_dot(edges+edges1))
+    for _ in range(1000):
+        for i in avail:
+            x, y = tuple(map(int, np.where(b == i)))
+            avail = get_moves(b, x, y)
+            edges = moves_to_edges(b[x][y], avail)
+            graph = edges_to_graph(graph, edges)
+
+    print(graph)
+
 
     recorder1 = Recorder()
     search(graph, b[startx][starty], "depth", recorder1)
