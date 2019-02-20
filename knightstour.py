@@ -1,67 +1,83 @@
 import numpy as np
 import graph #Jim's graph data structure code
-
-"""
-I think I may have gone a little overboard with the chess board generation
-if it's too slow I will try to simplify it
-"""
+from graph import *
 
 def generate_board(x, y):
     """
     Generates a labeled NxN chess board
-    >>> generate_board(5, 5)
-    array([[ 0,  1,  2,  3,  4],
-           [ 5,  6,  7,  8,  9],
-           [10, 11, 12, 13, 14],
-           [15, 16, 17, 18, 19],
-           [20, 21, 22, 23, 24]])
+    I put it in a function because I didn't want to type it out every time :)
     """
-    board = np.ones(x * y, dtype=int)
-
-    for i in range(0, x * y):
-        board[i] = i
-
-    board = board.reshape((x,y))
-
-    return board
+    return np.arange(start = 0, stop = x * y, step = 1).reshape((x,y))
 
 def get_moves(board, x, y):
     """
     ----------------
-    |  |2 |  |3 |  |
+    |  |2 |  | 3|  |
     ----------------
-    |1 |  |  |  |4 |
+    |1 |  |  |  | 4|
     ----------------
-    |  |  |K |  |  |
+    |  |  |KN|  |  |
     ----------------
-    |8 |  |  |  |5 |
+    |8 |  |  |  | 5|
     ----------------
-    |  |7 |  |6 |  |
+    |  |7 |  | 6|  |
     ----------------
-
     >>> board = generate_board(5,5)
     >>> get_moves(board, 0, 0)
     [7, 11]
     >>> get_moves(board, 2, 2)
     [3, 9, 19, 23, 21, 15, 5, 1]
     """
-
     #The following arrray is the difference between the X,Y of the knight and its 8 possible moves
     moves = [(-2, 1), (-1, 2), (1, 2), (2, 1), (2, -1), (1, -2), (-1, -2), (-2, -1)]
-
     available = []
 
     for i in moves:
-        if 0 <= x + i[0] <= board.shape[1] - 1:
-            if 0 <= y + i[1] <= board.shape[0] - 1:
+        if 0 <= x + i[0] < board.shape[1]:
+            if 0 <= y + i[1] < board.shape[0]:
                 available.append(board[x + i[0]][y + i[1]])
 
     return available
 
+def moves_to_edges(pos, available):
+    edges = []
 
+    for i in available:
+        edges.append((pos, i))
+    
+    return edges
 
 def main():
-    print("hi")
+    startx = 4
+    starty = 4
+    x = startx
+    y = starty
+
+    b = generate_board(5,5)
+    avail = get_moves(b, x, y)
+    
+    print(f"{b} \n")
+    print(f"Possible moves:{avail} \n")
+    """
+    print("Coordinates of moves:")
+    for i in avail:
+        print(np.where(b == i))
+    """
+    edges1 = moves_to_edges(b[x][y], avail)
+    graph = {}
+    graph = edges_to_graph(graph, edges1)
+
+    x, y = tuple(map(int, np.where(b == avail[0])))
+    avail = get_moves(b, x, y)
+    edges = moves_to_edges(b[x][y], avail)
+    graph = edges_to_graph(graph, edges)
+
+    print(edges_to_dot(edges+edges1))
+
+    recorder1 = Recorder()
+    search(graph, b[startx][starty], "depth", recorder1)
+    print(f"Path: {recorder1.replay()}")
+
 
 
 if __name__ == "__main__":

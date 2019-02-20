@@ -146,41 +146,6 @@ def search(graph, start, which, function):
         for candidate in neighbors:            # Add new ones to fringe.
             if not candidate in visited and not candidate in fringe:
                 fringe.push(candidate)
-
-# def main():
-#     """ Playing around with a tree. """
-#     #Graph from problem 5.1
-    # edges = [ ('a', 'b'), ('a', 'd'), ('a', 'i'),
-    #             ('b', 'd'), ('b', 'c'), ('b', 'e'),
-    #             ('c', 'f'), ('c', 'e'),
-    #             ('d', 'e'), ('d', 'g'),
-    #             ('e', 'g'), ('e', 'h'), ('e', 'f'),
-    #             ('f', 'h'),
-    #             ('g', 'h'), ('g', 'j'), ('g', 'i'),
-    #             ('h', 'j'),
-    #             ('i', 'j') ] 
-
-#     # Show a graphviz representation.
-#     print(edges_to_dot(edges))
-
-#     # Convert to a dictionary of parent nodes and their children.
-#     graph = edges_to_graph(edges)
-#     print('-- graph node:node --')
-#     prettyprint(graph)
-#     print()
-
-#     # Do a depthsearch starting at node 'a' and show the traverseral order.
-#     print('-- depth-first search --')
-#     record1 = Recorder()
-#     search(graph, 'a', 'depth', record1)
-#     print(record1.replay())
-#     print()
-
-#     # Do a breadth search starting at node 'a' and show the traverseral order.
-#     print('-- breadth-first search --')
-#     record2 = Recorder()
-#     search(graph, 'a', 'breadth', record2)
-#     print(record2.replay())
     
 if __name__ == '__main__':
     import doctest
