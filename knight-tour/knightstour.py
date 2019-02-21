@@ -69,14 +69,16 @@ def knight_tour(b, x, y, j):
     graph = {}
     graph = edges_to_graph(graph, edges)
 
-    if j <= b.shape[0] * b.shape[1]:
+    while j < 65:
         for i in avail:
             #print(f"Possible moves:{avail} \n")
             x, y = tuple(map(int, np.where(b == i)))
             avail = get_moves(b, x, y)
             edges = moves_to_edges(b[x][y], avail)
             graph = edges_to_graph(graph, edges)
-            knight_tour(b,x,y,(j + 1))
+            j+=1
+
+    return graph
 
 def main():
     startx = 0
