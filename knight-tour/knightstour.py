@@ -47,35 +47,53 @@ def moves_to_edges(pos, available):
     
     return edges
 
+# def knight_tour(b,x,y):
+#     avail = get_moves(b, x, y)
+#     edges = moves_to_edges(b[x][y], avail)
+#     graph = {}
+#     graph = edges_to_graph(graph, edges)
+
+#     for _ in range(b.shape[0] * b.shape[1]):
+#         for i in avail:
+#             #print(f"Possible moves:{avail} \n")
+#             x, y = tuple(map(int, np.where(b == i)))
+#             avail = get_moves(b, x, y)
+#             edges = moves_to_edges(b[x][y], avail)
+#             graph = edges_to_graph(graph, edges)
+
+#     return graph
+
+def knight_tour(b, x, y, j):
+    avail = get_moves(b, x, y)
+    edges = moves_to_edges(b[x][y], avail)
+    graph = {}
+    graph = edges_to_graph(graph, edges)
+
+    if j <= b.shape[0] * b.shape[1]:
+        for i in avail:
+            #print(f"Possible moves:{avail} \n")
+            x, y = tuple(map(int, np.where(b == i)))
+            avail = get_moves(b, x, y)
+            edges = moves_to_edges(b[x][y], avail)
+            graph = edges_to_graph(graph, edges)
+            knight_tour(b,x,y,(j + 1))
+
 def main():
-    startx = 2
-    starty = 2
+    startx = 0
+    starty = 0
     x = startx
     y = starty
 
-    b = generate_board(5,5)
-    avail = get_moves(b, x, y)
+    b = generate_board(5,5) #remember to put in error handeling for boards smaller than 3 and just generally places that have no possible moves
     
     print(f"{b} \n")
-    print(f"Possible moves:{avail} \n")
     """
     print("Coordinates of moves:")
     for i in avail:
         print(np.where(b == i))
     """
-    edges = moves_to_edges(b[x][y], avail)
-    graph = {}
-    graph = edges_to_graph(graph, edges)
 
-    for _ in range(1000):
-        for i in avail:
-            x, y = tuple(map(int, np.where(b == i)))
-            avail = get_moves(b, x, y)
-            edges = moves_to_edges(b[x][y], avail)
-            graph = edges_to_graph(graph, edges)
-
-    print(graph)
-
+    graph = knight_tour(b, x, y, 0)
 
     recorder1 = Recorder()
     search(graph, b[startx][starty], "depth", recorder1)
