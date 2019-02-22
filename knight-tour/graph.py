@@ -130,7 +130,7 @@ def prettyprint(thing):
     pp = pprint.PrettyPrinter()
     pp.pprint(thing)
     
-def search(graph, start, which, function):
+def search(graph, start, which):#,function):
     """ depth-first or breadth-first  search """
     visited = {}               # Nodes which we're done with.
     if which == 'depth':       # Create a fringe of nodes-to-visit ...
@@ -141,7 +141,7 @@ def search(graph, start, which, function):
     while len(fringe) > 0:     # Search loop:
         node = fringe.pop()                    # Get node to process.
         visited[node] = True                   # Mark it as 'processed'.
-        function(node)                         # Do something with it.
+        #function(node)                         # Do something with it.
         neighbors = sorted(graph[node].keys()) # Get neighbors.
         for candidate in neighbors:            # Add new ones to fringe.
             if not candidate in visited and not candidate in fringe:

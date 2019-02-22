@@ -5,7 +5,6 @@ from graph import *
 def generate_board(n):
     """
     Generates a labeled NxN chess board
-    I put it in a function because I didn't want to type it out every time :)
     """
     return np.arange(start = 0, stop = n * n, step = 1).reshape((n, n))
 
@@ -49,22 +48,18 @@ def generate_edges(b):
                 edges.append((b[i][j], l))
     return edges
 
-def knight_tour(x, y, board, graph):
-    path = search(graph, board[x][y], "depth")
-
+def knight_tour(board, x, y, graph):
+    return search(graph, board[x][y], "depth")
 
 def main():
     #print(edges_to_dot(generate_edges(generate_board(5)), lined_up=[]))
-    b = generate_board(3)
+    b = generate_board(5)
     edges = generate_edges(b)
     graph = {}
     graph = edges_to_graph(graph, edges)
     
     print(b)
-    recorder1 = Recorder()
-    path = search(graph, b[0][0], "depth", recorder1)
-    print(path)
-    print(f"Path: {recorder1.replay()}")
+    print(knight_tour(b, 3, 3, graph))
 
 if __name__ == "__main__":
     import doctest
