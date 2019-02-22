@@ -2,12 +2,12 @@ import numpy as np
 import graph #Jim's graph data structure code
 from graph import *
 
-def generate_board(x, y):
+def generate_board(n):
     """
     Generates a labeled NxN chess board
     I put it in a function because I didn't want to type it out every time :)
     """
-    return np.arange(start = 0, stop = x * y, step = 1).reshape((x,y))
+    return np.arange(start = 0, stop = n * n, step = 1).reshape((n, n))
 
 def get_moves(board, x, y):
     """
@@ -22,7 +22,7 @@ def get_moves(board, x, y):
     ----------------
     |  |7 |  | 6|  |
     ----------------
-    >>> board = generate_board(5,5)
+    >>> board = generate_board(5)
     >>> get_moves(board, 0, 0)
     [7, 11]
     >>> get_moves(board, 2, 2)
@@ -39,52 +39,32 @@ def get_moves(board, x, y):
 
     return available
 
-def moves_to_edges(pos, available):
+def generate_edges(b):
     edges = []
 
-    for i in available:
-        edges.append((pos, i))
-    
+    for i in range(b.shape[0]):
+        for j in range(b.shape[1]):
+            avail = get_moves(b, i, j)
+            for l in avail:
+                edges.append((b[i][j], l))
     return edges
 
-def knight_tour(b,x,y):
-    avail = get_moves(b, x, y)
-    edges = moves_to_edges(b[x][y], avail)
-    graph = {}
-    graph = edges_to_graph(graph, edges)
+def knight_tour(x, y, board, graph):
+    path = search(graph, board[x][y], "depth")
 
-    for _ in range(b.shape[0] * b.shape[1]):
-        for i in avail:
-            #print(f"Possible moves:{avail} \n")
-            x, y = tuple(map(int, np.where(b == i)))
-            avail = get_moves(b, x, y)
-            edges = moves_to_edges(b[x][y], avail)
-            graph = edges_to_graph(graph, edges)
-
-    return graph
 
 def main():
-    startx = 0
-    starty = 0
-    x = startx
-    y = starty
-
-    b = generate_board(5,5) #remember to put in error handeling for boards smaller than 3 and just generally places that have no possible moves
+    #print(edges_to_dot(generate_edges(generate_board(5)), lined_up=[]))
+    b = generate_board(3)
+    edges = generate_edges(b)
+    graph = {}
+    graph = edges_to_graph(graph, edges)
     
-    print(f"{b} \n")
-    """
-    print("Coordinates of moves:")
-    for i in avail:
-        print(np.where(b == i))
-    """
-
-    graph = knight_tour(b, x, y)
-
+    print(b)
     recorder1 = Recorder()
-    search(graph, b[startx][starty], "depth", recorder1)
+    path = search(graph, b[0][0], "depth", recorder1)
+    print(path)
     print(f"Path: {recorder1.replay()}")
-
-
 
 if __name__ == "__main__":
     import doctest

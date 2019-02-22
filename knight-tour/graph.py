@@ -147,6 +147,8 @@ def search(graph, start, which, function):
             if not candidate in visited and not candidate in fringe:
                 fringe.push(candidate)
     
+    return visited
+    
 if __name__ == '__main__':
     import doctest
     doctest.testmod()
