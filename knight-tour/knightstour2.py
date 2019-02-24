@@ -1,6 +1,26 @@
 import numpy as np
-import graph #Jim's graph data structure code
-from graph import *
+#Jim's graph data structure code
+from graph import edges_to_dot, edges_to_graph, Stack, Queue
+
+def search(graph, n, start, path=[]):
+    """ depth-first or breadth-first  search """
+    visited = {}          # Nodes which we're done with.
+    fringe = Stack()           # Create a fringe of nodes-to-visit ...
+    fringe.push(start)         # Initialize the search.
+    while len(fringe) > 0:     # Search loop:
+        node = fringe.pop()                    # Get node to process.
+        visited[node] = True                   # Mark it as 'processed'.
+        neighbors = sorted(graph[node].keys()) # Get neighbors.
+
+        for i in neighbors:
+            if i in visited:
+                neighbors.remove(i)
+
+        for candidate in neighbors:
+            if not candidate in visited and not candidate in fringe:
+                fringe.push(candidate)
+    
+    return path        
 
 def generate_board(n):
     """
@@ -49,7 +69,8 @@ def generate_edges(b):
     return edges
 
 def knight_tour(board, x, y, graph):
-    return search(graph, board[x][y], "depth")
+    return search(graph, 0, board[x][y])
+
 
 def main():
     #print(edges_to_dot(generate_edges(generate_board(5)), lined_up=[]))
@@ -65,3 +86,28 @@ if __name__ == "__main__":
     import doctest
     doctest.testmod()
     main()
+
+    # for i in avail:
+    #     x1, y1 = tuple(map(int, np.where(board == i)))
+    #     path = search(graph, board[x1][y1], "depth")
+    #     print(f"{path}\n")
+
+    # def search(board, graph, n, x, y,path = [], visited = []):
+#     path.append(board[x][y])
+#     finished = False
+#     counter = 0
+#     if n <= len(board) ** 2:         #see if every square was visited
+#         avail = get_moves(board, x, y)
+#         while counter < len(avail) and not finished:
+#             if avail[counter] not in visited:
+#                 visited.append(avail[counter])
+#                 path.append(avail[counter])
+#                 finished = search(board, graph, n+1, x, y, path, visited)
+#             counter += 1
+#         if not finished:
+#             visited.remove(path[-1])
+#             path.pop()
+#     else:
+#         finished = True
+
+#     return path
