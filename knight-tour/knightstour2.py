@@ -1,26 +1,25 @@
 import numpy as np
 #Jim's graph data structure code
-from graph import edges_to_dot, edges_to_graph, Stack, Queue
+from graph import edges_to_dot, edges_to_graph, Stack
 
-def search(graph, n, start, path=[]):
-    """ depth-first or breadth-first  search """
-    visited = {}          # Nodes which we're done with.
-    fringe = Stack()           # Create a fringe of nodes-to-visit ...
-    fringe.push(start)         # Initialize the search.
-    while len(fringe) > 0:     # Search loop:
-        node = fringe.pop()                    # Get node to process.
-        visited[node] = True                   # Mark it as 'processed'.
-        neighbors = sorted(graph[node].keys()) # Get neighbors.
+def search(board, n, x, y, path=[]):
+    """
+    This algorithm is based on the one here http://interactivepython.org/runestone/static/pythonds/Graphs/ImplementingKnightsTour.html
+    I didn't end up using the graph data structure that is included in graph.py
+    but the visualizations are still very helpful in my oppinion
+    """
+    path.append(board[x][y])
+    avail = get_moves(board, x, y)
+    if n == board.size - 1:
+        print(path)
+        exit() #I couldn't figure out a clean way to end the recursion once a path was found
+    else:
+        for i in avail:
+            if i not in path:
+                x, y = tuple(map(int, np.where(board == i)))
+                search(board, n+1, x, y, path)
 
-        for i in neighbors:
-            if i in visited:
-                neighbors.remove(i)
-
-        for candidate in neighbors:
-            if not candidate in visited and not candidate in fringe:
-                fringe.push(candidate)
-    
-    return path        
+        path.pop()
 
 def generate_board(n):
     """
@@ -68,46 +67,16 @@ def generate_edges(b):
                 edges.append((b[i][j], l))
     return edges
 
-def knight_tour(board, x, y, graph):
-    return search(graph, 0, board[x][y])
-
-
 def main():
-    #print(edges_to_dot(generate_edges(generate_board(5)), lined_up=[]))
-    b = generate_board(5)
+    b = generate_board(6)
     edges = generate_edges(b)
     graph = {}
     graph = edges_to_graph(graph, edges)
     
     print(b)
-    print(knight_tour(b, 3, 3, graph))
+    search(b, 0, 1, 1)
 
 if __name__ == "__main__":
     import doctest
     doctest.testmod()
-    main()
-
-    # for i in avail:
-    #     x1, y1 = tuple(map(int, np.where(board == i)))
-    #     path = search(graph, board[x1][y1], "depth")
-    #     print(f"{path}\n")
-
-    # def search(board, graph, n, x, y,path = [], visited = []):
-#     path.append(board[x][y])
-#     finished = False
-#     counter = 0
-#     if n <= len(board) ** 2:         #see if every square was visited
-#         avail = get_moves(board, x, y)
-#         while counter < len(avail) and not finished:
-#             if avail[counter] not in visited:
-#                 visited.append(avail[counter])
-#                 path.append(avail[counter])
-#                 finished = search(board, graph, n+1, x, y, path, visited)
-#             counter += 1
-#         if not finished:
-#             visited.remove(path[-1])
-#             path.pop()
-#     else:
-#         finished = True
-
-#     return path
+    main()ls
