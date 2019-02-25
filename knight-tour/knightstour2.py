@@ -2,25 +2,6 @@ import numpy as np
 #Jim's graph data structure code
 from graph import edges_to_dot, edges_to_graph, Stack
 
-def search(board, n, x, y, path=[]):
-    """
-    This algorithm is based on the one here http://interactivepython.org/runestone/static/pythonds/Graphs/ImplementingKnightsTour.html
-    I didn't end up using the graph data structure that is included in graph.py
-    but the visualizations are still very helpful in my oppinion
-    """
-    path.append(board[x][y])
-    avail = get_moves(board, x, y)
-    if n == board.size - 1:
-        print(path)
-        exit() #I couldn't figure out a clean way to end the recursion once a path was found
-    else:
-        for i in avail:
-            if i not in path:
-                x, y = tuple(map(int, np.where(board == i)))
-                search(board, n+1, x, y, path)
-
-        path.pop()
-
 def generate_board(n):
     """
     Generates a labeled NxN chess board
@@ -58,8 +39,11 @@ def get_moves(board, x, y):
     return available
 
 def generate_edges(b):
+    """
+    This is generating every edge twice because I thought that was how the graph in Jim's code worked
+    However this is not the case and the graph is just twice as big as it needs to be
+    """
     edges = []
-
     for i in range(b.shape[0]):
         for j in range(b.shape[1]):
             avail = get_moves(b, i, j)
@@ -67,16 +51,34 @@ def generate_edges(b):
                 edges.append((b[i][j], l))
     return edges
 
+def tour(board, n, x, y, path=[]):
+    """
+    I didn't end up using the graph data structure that is included in graph.py
+    but the visualizations are still very helpful in my oppinion
+    """
+    path.append(board[x][y])
+    avail = get_moves(board, x, y)
+    if n == board.size - 1:       #If n is the size of the board, all the squares have been used (the -1 is because N is zero indexed)  
+        print(path)               #If there is no tour the algorithm prints nothing
+        exit()                    #Cleanest way I could think of to completly exit the recursion
+    else:
+        for i in avail:
+            if i not in path:
+                x, y = tuple(map(int, np.where(board == i)))
+                tour(board, n+1, x, y, path)
+
+        path.pop()
+
 def main():
-    b = generate_board(6)
+    b = generate_board(5)
     edges = generate_edges(b)
     graph = {}
     graph = edges_to_graph(graph, edges)
     
     print(b)
-    search(b, 0, 1, 1)
+    tour(b, 0, 2, 2)
 
 if __name__ == "__main__":
     import doctest
     doctest.testmod()
-    main()ls
+    main()
