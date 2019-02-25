@@ -51,16 +51,24 @@ def generate_edges(b):
                 edges.append((b[i][j], l))
     return edges
 
+def wassenndorf(board, x, y):
+    """
+    This orders the children nodes by the number of children they have in descending order
+    It's pretty amazing how much this speeds up computation
+    """
+    avail = get_moves(board, x, y)
+    return sorted(avail, key = lambda i: len(get_moves(board, tuple(map(int, np.where(board == i)))[0], tuple(map(int, np.where(board == i)))[1])))
+
 def tour(board, n, x, y, path=[]):
     """
     I didn't end up using the graph data structure that is included in graph.py
     but the visualizations are still very helpful in my oppinion
     """
     path.append(board[x][y])
-    avail = get_moves(board, x, y)
+    avail = wassenndorf(board, x, y)
     if n == board.size - 1:       #If n is the size of the board, all the squares have been used (the -1 is because N is zero indexed)  
         print(path)               #If there is no tour the algorithm prints nothing
-        exit()                    #Cleanest way I could think of to completly exit the recursion
+        exit()                    #Cleanest way I could think of to completly exit the recursion, If this was removed it would print all of the possible knights paths
     else:
         for i in avail:
             if i not in path:
@@ -70,11 +78,9 @@ def tour(board, n, x, y, path=[]):
         path.pop()
 
 def main():
-    b = generate_board(5)
+    b = generate_board(8)
     edges = generate_edges(b)
     graph = {}
-    graph = edges_to_graph(graph, edges)
-    
     print(b)
     tour(b, 0, 2, 2)
 
