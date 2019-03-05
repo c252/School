@@ -1,5 +1,4 @@
 class Node():
-    def __init__(self, name, weight):
+    def __init__(self, name):
         self.name = name
-        self. weight = weight
-
+        self.connections = {} #a dictionary of adjacent nodes and their weights
