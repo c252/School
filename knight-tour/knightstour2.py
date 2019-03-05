@@ -30,7 +30,7 @@ def get_moves(board, x, y):
     #The following arrray is the difference between the X,Y of the knight and its 8 possible moves
     moves = [(-2, 1), (-1, 2), (1, 2), (2, 1), (2, -1), (1, -2), (-1, -2), (-2, -1)]
     available = []
-
+    #Get the locations of all the offsets and then add them to available if they exist
     for i in moves:
         if 0 <= x + i[0] < board.shape[1]:
             if 0 <= y + i[1] < board.shape[0]:
@@ -53,7 +53,7 @@ def generate_edges(b):
 
 def wassenndorf(board, x, y):
     """
-    This orders the children nodes by the number of children they have in descending order
+    This orders the available children nodes by the number of children they have in descending order
     It's pretty amazing how much this speeds up computation
     """
     avail = get_moves(board, x, y)
@@ -72,8 +72,8 @@ def tour(board, n, x, y, path=[]):
     else:
         for i in avail:
             if i not in path:
-                x, y = tuple(map(int, np.where(board == i)))
-                tour(board, n+1, x, y, path)
+                x, y = tuple(map(int, np.where(board == i))) #get the x,y coords of I
+                tour(board, n+1, x, y, path)                 #recursively call the algorithm on the children
 
         path.pop()
 
