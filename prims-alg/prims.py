@@ -14,7 +14,7 @@ graph_1 = { A : {B:6, D:4, I:9},
            }
 
 def prims(graph):
-    seen = []
+    min_tree = []
     for v0 in graph.keys():
         print(v0)
         for i in graph[v0]:
