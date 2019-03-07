@@ -13,15 +13,15 @@ graph_1 = { A : {B:6, D:4, I:9},
             J : {I:1, G:2, H:4},
            }
 
-def prims():
+def prims(graph):
     seen = []
-    for v0 in graph_1.keys():
-        for i in v0:
-            minimum = v0[0]
-            if i < minimum:
-                minimum = i
-            print(minimum)
+    for v0 in graph.keys():
+        print(v0)
+        for i in graph[v0]:
+            print(f"{i}, {graph[v0][i]}")
 
-        seen.append(v0)
+def main():
+    prims(graph_1)
 
-    print(seen)
+if __name__ == "__main__":
+    main()
