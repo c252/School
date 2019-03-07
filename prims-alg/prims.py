@@ -1,6 +1,10 @@
 A='A';B='B';C='C';D='D';E='E';F='F';G='G';H='H';I='I';J='J';K='K';L='L';M='M'
 N='N';O='O';P='P';Q='Q';R='R';S='S';T='T';U='U';V='V';W='W';X='X';Y='Y';Z='Z'
 
+"""
+Still unsure of whether or not I should OO the graph
+so I am trying both
+"""
 graph_1 = { A : {B:6, D:4, I:9},
             B : {A:6, D:3, E:1, C:3},
             C : {B:3, E:2, F:2},
@@ -12,6 +16,14 @@ graph_1 = { A : {B:6, D:4, I:9},
             I : {A:9, G:2, J:1},
             J : {I:1, G:2, H:4},
            }
+
+def Node():
+    def __init__(self, name):
+        self.name = name
+        self.edges = {}
+    
+    def add_edge(self, end_point, weight):
+        self.edges[end_point] = weight
 
 def prims(graph):
     min_tree = []
