@@ -1,39 +1,51 @@
-A='A';B='B';C='C';D='D';E='E';F='F';G='G';H='H';I='I';J='J';K='K';L='L';M='M'
-N='N';O='O';P='P';Q='Q';R='R';S='S';T='T';U='U';V='V';W='W';X='X';Y='Y';Z='Z'
-
 """
-Still unsure of whether or not I should OO the graph
-so I am trying both
+prims.py
 """
-graph_1 = { A : {B:6, D:4, I:9},
-            B : {A:6, D:3, E:1, C:3},
-            C : {B:3, E:2, F:2},
-            D : {A:4, B:3, E:4, G:6},
-            E : {B:1, C:2, F:8, H:7, G:6, D:4},
-            F : {C:2, E:8, H:11},
-            G : {D:6, H:3, J:2, I:2, E:6},
-            H : {E:7, F:11, J:4, G:3},
-            I : {A:9, G:2, J:1},
-            J : {I:1, G:2, H:4},
-           }
 
-def Node():
-    def __init__(self, name):
+class Node():
+    """
+    simple node class
+    """
+    def __init__(self, name, seen=False):
         self.name = name
         self.edges = {}
+        #Boolean flag if the node has been seen by the algorithm
+        self.seen = seen
     
     def add_edge(self, end_point, weight):
+        #This makes it easier to connect nodes, because you don't have to type node.name
+        if str(type(end_point)) == "<class '__main__.Node'>":
+            end_point = end_point.name
         self.edges[end_point] = weight
 
-def prims(graph):
-    min_tree = []
-    for v0 in graph.keys():
-        print(v0)
-        for i in graph[v0]:
-            print(f"{i}, {graph[v0][i]}")
+    def remove_edge(self, end_point):
+        #This function was only for debug purposes
+        del self.edges[end_point]
 
-def main():
-    prims(graph_1)
+class Graph():
+    """
+    OO wrapper for an adjacency list graph using dictionaries
+    """
+    def __init__(self):
+        self.nodes = {}
+
+    def add_node(self, node):
+        self.nodes[node.name] = node.edges
+
+    def add_edge(self, v0, v1, weight):
+        v0.add_edge(v1, weight)
+        v1.add_edge(v0, weight)
 
 if __name__ == "__main__":
-    main()
+    a = Node('a')
+    b = Node('b')
+    c = Node('c')
+    d = Node('d')
+
+    a.add_edge(b, 5)
+    a.add_edge(c, 3)
+    a.add_edge(d, 6)
+
+    b.add_edge(a, 5)
+    c.add_edge(a, 3)
+    d.add_edge(a, 6)
