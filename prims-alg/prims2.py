@@ -21,10 +21,21 @@ def add_edge(graph, v0, v1, weight):
     graph[v0][v1] = weight
     graph[v1][v0] = weight
 
-def prims(graph):
+def min_edge(node):
+    """
+    Input a node with connections.
+    Returns node with smallest weight.
+    Efficiency: O(n)
+    """
+    minim = list(node.keys())[0] #assume the first connection is shortest
+    for i in node:
+        if node[i] <= node[minim]:
+            minim = i
+    return minim
+        
+
+def prims(graph, start):
     min_tree = []
-    v0 = A
-    #for v0 in graph.keys():
-    print(v0)
-    for i in graph[v0]:
-        print(f"{i}, {graph[v0][i]}")
+    for i in graph:
+        print(f"NODE: {i} {min_edge(graph[i])}")
+        min_tree.append(min_edge(graph[i]))
