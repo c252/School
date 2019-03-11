@@ -37,5 +37,15 @@ def min_edge(node):
 def prims(graph, start):
     min_tree = []
     for i in graph:
-        print(f"NODE: {i} {min_edge(graph[i])}")
-        min_tree.append(min_edge(graph[i]))
+        candidates = list(graph[i].keys()) #get the possible nodes to add to the tree as a list
+        candidates = sorted(candidates, key = lambda x: graph[i][x])
+        print(candidates)
+        for j in candidates:
+            if j not in min_tree:
+                min_tree.append((i, j, graph[i][j]))
+                break
+        print(min_tree)
+        # for v in graph[i]:
+        #     print(f"NODE: {i} {min_edge(graph[i])}")
+        #     print(v)
+        #     min_tree.append(min_edge(graph[i]))
