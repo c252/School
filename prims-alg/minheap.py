@@ -12,11 +12,20 @@ as well as the article I linked on InteractivePython
 class MinHeap():
     """
     A minimum priority queue
+    >>> heap = MinHeap()
+    >>> heap.heapify([1,5,3,9,12,-5,-2,4])
+    >>> heap.heap
+    [0, -5, 4, -2, 5, 12, 3, 1, 9]
+    >>> heap.getmin()
+    -5
+    >>> heap.heap
+    [0, -2, 4, 1, 5, 12, 3, 9]
     """
     def __init__(self):
+        #multiplying by 0 so a small buffer is needed
         self.heap = [0]
         self.size = 0
-
+        
     def childl(self, i):
         """
         Returns the left child in minimum heap
@@ -76,3 +85,7 @@ class MinHeap():
         while i > 0:
             self.prcdown(i)
             i -= 1
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()

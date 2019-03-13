@@ -21,6 +21,13 @@ def add_edge(graph, v0, v1, weight):
     graph[v0][v1] = weight
     graph[v1][v0] = weight
 
+def edges_to_graph(edges):
+    """
+    converts edges to graphs.
+    where an edge is a tuple (Node1, Node2, Weight)
+    ie. (A, B, 5)
+    """
+
 def min_edge(node):
     """
     Input a node with connections.
