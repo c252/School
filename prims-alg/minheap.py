@@ -13,13 +13,14 @@ class MinHeap():
         self.heap = [0] * values
         self.size = 0
 
-	def childl(self, i):
-		return 2 * i
+    def childl(self, i):
+        return 2 * i
 
-	def childr(self, i):
-		return i // 2
+    def childr(self, i):
+	    return i // 2
 
     def prcup(self, i):
+        pass
 
-	def insert(self, value):
-		self.heap.append(value)
+    def insert(self, value):
+	    self.heap.append(value)
