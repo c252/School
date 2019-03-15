@@ -15,6 +15,9 @@ graph_1 = { A : {B:6, D:4, I:9},
             J : {I:1, G:2, H:4},
            }
 
+edges_1 = [(A, B, 6), (A, D, 4), (A, I, 9), (B, D, 3), (B, E, 1), (B, C, 3),
+            (C, E, 3), (C, F, 2), (D, E, 4), (D, G, 6)]
+
 def add_edge(graph, v0, v1, weight):
     """
     Small helper function to connect 2 nodes in a graph. 
