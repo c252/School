@@ -1,3 +1,5 @@
+from minheap import *
+
 A='A';B='B';C='C';D='D';E='E';F='F';G='G';H='H';I='I';J='J';K='K';L='L';M='M'
 N='N';O='O';P='P';Q='Q';R='R';S='S';T='T';U='U';V='V';W='W';X='X';Y='Y';Z='Z'
 
@@ -21,13 +23,29 @@ def add_edge(graph, v0, v1, weight):
     graph[v0][v1] = weight
     graph[v1][v0] = weight
 
-def edges_to_graph(edges):
+def edges_to_graph(edges, existing_graph=None):
     """
-    converts edges to graphs.
+    converts edges to graphs. It can also add an edge to a graph
+    if you use the optional existing_graph arg.
     where an edge is a tuple (Node1, Node2, Weight)
     ie. (A, B, 5)
+    This is Jim's edges to graph function modified for weighted graphs
+    >>> edges = [(A, B, 4), (A, C, 7), (C, B, 8)]
+    >>> edges_to_graph(edges)
+    {'A': {'B': 4, 'C': 7}, 'B': {'A': 4, 'C': 8}, 'C': {'A': 7, 'B': 8}}
     """
+    if existing_graph:
+        graph = existing_graph
+    else:
+        graph = {}
 
+    for (a, b, w) in edges:
+        for (node1, node2) in ((a, b), (b, a)):
+            if not node1 in graph:
+                graph[node1] = {}
+            graph[node1][node2] = w
+    return graph
+        
 def min_edge(node):
     """
     Input a node with connections.
@@ -39,15 +57,17 @@ def min_edge(node):
         if node[i] <= node[minim]:
             minim = i
     return minim
-        
 
 def prims(graph, start):
-    min_tree = []
+    min_tree = {}
+    edges_queue = MinHeap()
     for i in graph:
-        candidates = list(graph[i].keys()) #get the possible nodes to add to the tree as a list
-        candidates = sorted(candidates, key = lambda x: graph[i][x])
-        print(candidates)
-        # for v in graph[i]:
-        #     print(f"NODE: {i} {min_edge(graph[i])}")
-        #     print(v)
-        #     min_tree.append(min_edge(graph[i]))
+        for j in graph[i]:
+            edges_queue.insert(tuple([graph[i][j], i, j]))
+
+    for _ in range(len(edges_queue)):
+        print(edges_queue.getmin())
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()

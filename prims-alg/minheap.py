@@ -26,6 +26,9 @@ class MinHeap():
         self.heap = [0]
         self.size = 0
         
+    def __len__(self):
+        return self.size
+
     def childl(self, i):
         """
         Returns the left child in minimum heap
@@ -71,6 +74,8 @@ class MinHeap():
     	self.prcup(self.size)
 
     def getmin(self):
+        if self.size == 1:
+            return None
         result = self.heap[1]
         self.heap[1] = self.heap[self.size]
         self.size -= 1
