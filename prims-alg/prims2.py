@@ -62,15 +62,20 @@ def edges_to_graph(edges, existing_graph=None):
             graph[node_0][node_1] = w
     return graph
 
-def min_edge(node):
+def min_edge(queue):
     """
     Input a node with connections.
     Returns node with smallest weight.
     Efficiency: O(n)
     """
-    minim = list(node.keys())[0] #assume the first connection is shortest
-    for i in node:
-        if node[i] <= node[minim]:
+    # minim = list(node.keys())[0] #assume the first connection is shortest
+    # for i in node:
+    #     if node[i] <= node[minim]:
+    #         minim = i
+    # return minim
+    minim = queue[0]
+    for i in queue:
+        if i[0] < minim[0]:
             minim = i
     return minim
 
@@ -84,21 +89,17 @@ def dict_to_edges(dictionary, start):
         result.append((dictionary[i], i, start))
     return result
 
-def prims(edges, start):
-    graph = edges_to_graph(edges)
+def prims(graph, start):
     min_tree = {}
     edges_queue = []
 
     edges_queue += dict_to_edges(graph[start], start)
-
-    # edges_queue.heapify(dict_to_edges(graph[start], start))
-    # min_edge = edges_queue.getmin()
-    # add_edge(min_tree, min_edge)
-
-    #while len(min_tree) != len(graph):
-
-
-    print(edges_queue)
+    while len(min_tree) != 2: #!= len(graph):
+        closest_node = min_edge(edges_queue)
+        add_edge(min_tree, closest_node)
+        edges_queue += 
+    
+    print(f"Queue: {edges_queue} \n \n Min Tree: {min_tree}")
 
 if __name__ == "__main__":
     import doctest
