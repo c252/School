@@ -66,13 +66,7 @@ def min_edge(queue):
     """
     Input a node with connections.
     Returns node with smallest weight.
-    Efficiency: O(n)
     """
-    # minim = list(node.keys())[0] #assume the first connection is shortest
-    # for i in node:
-    #     if node[i] <= node[minim]:
-    #         minim = i
-    # return minim
     minim = queue[0]
     for i in queue:
         if i[0] < minim[0]:
@@ -90,16 +84,18 @@ def dict_to_edges(dictionary, start):
     return result
 
 def prims(graph, start):
+    inf = float("inf")#the initial distances of the edges is set to infinity in prim's algorithm
     min_tree = {}
-    edges_queue = []
-
-    edges_queue += dict_to_edges(graph[start], start)
-    while len(min_tree) != 2: #!= len(graph):
-        closest_node = min_edge(edges_queue)
-        add_edge(min_tree, closest_node)
-        edges_queue += 
-    
-    print(f"Queue: {edges_queue} \n \n Min Tree: {min_tree}")
+    edges_queue = MinHeap()
+    #a bit of an awkward way to make sure we don't up using the same edge twice like (5, A, B) and (5, B, A)
+    seen = {}
+    edges = []
+    for i in graph:
+        seen[i] = True
+        for j in graph[i]:
+            if j not in seen: edges.append((inf, i, j))
+    edges_queue.heapify(edges)
+    print(f"Queue: {edges_queue.heap} \n \n Min Tree: {min_tree}")
 
 if __name__ == "__main__":
     import doctest

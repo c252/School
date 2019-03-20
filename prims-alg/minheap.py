@@ -16,7 +16,7 @@ class MinHeap():
     >>> heap.heapify([1,5,3,9,12,-5,-2,4])
     >>> heap.heap
     [0, -5, 4, -2, 5, 12, 3, 1, 9]
-    >>> heap.getmin()
+    >>> heap.pop()
     -5
     >>> heap.heap
     [0, -2, 4, 1, 5, 12, 3, 9]
@@ -68,12 +68,12 @@ class MinHeap():
                 self.heap[i], self.heap[smallest] = self.heap[smallest], self.heap[i]
             i = smallest
 
-    def insert(self, value):
+    def push(self, value):
     	self.heap.append(value)
     	self.size += 1
     	self.prcup(self.size)
 
-    def getmin(self):
+    def pop(self):
         if self.size == 1:
             return None
         result = self.heap[1]
@@ -90,6 +90,20 @@ class MinHeap():
         while i > 0:
             self.prcdown(i)
             i -= 1
+
+    # def decrease_key(self, name, value):
+    #     """
+    #     Find a node and decrease its value
+    #     a node is a tuple like this: (Weight, Node_0, Node_1)
+    #     """
+    #     found = False #have we found the node we are looking for yet?
+    #     key = 0
+    #     for i in range(self.size):
+    #         if found == True:
+    #             break
+        
+    #     if key > 0:
+    #         self.heap[key] = 
 
 if __name__ == "__main__":
     import doctest
