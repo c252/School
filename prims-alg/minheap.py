@@ -91,19 +91,26 @@ class MinHeap():
             self.prcdown(i)
             i -= 1
 
-    # def decrease_key(self, name, value):
-    #     """
-    #     Find a node and decrease its value
-    #     a node is a tuple like this: (Weight, Node_0, Node_1)
-    #     """
-    #     found = False #have we found the node we are looking for yet?
-    #     key = 0
-    #     for i in range(self.size):
-    #         if found == True:
-    #             break
+    def decrease_key(self, name, value):
+        """
+        Find a node and decrease its value
+        a node is a tuple like this: (Weight, Node_0, Node_1)
+        """
+        found = False #have we found the node we are looking for yet?
+        key = 0
+        for i in range(self.size + 1):
+            print(self.heap[i])
+            # if found == True:
+            #     break
+            # if self.heap[i][1] == name[0] and self.heap[i][2] == name[1]:
+            #     found = True
+            #     key = i
+            # else:
+            #     i += 1
         
-    #     if key > 0:
-    #         self.heap[key] = 
+        if key > 0:
+            self.heap[key][0] = value
+            self.prcup(key)
 
 if __name__ == "__main__":
     import doctest
