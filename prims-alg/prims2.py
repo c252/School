@@ -89,14 +89,23 @@ def prims(graph, start):
     edges_queue = MinHeap()
     #a bit of an awkward way to make sure we don't up using the same edge twice like (5, A, B) and (5, B, A)
     seen = {}
-    #edges = []
+    edges = []
     for i in graph:
         seen[i] = True
         for j in graph[i]:
-            if j not in seen: edges_queue.push((inf, i, j))
-    #edges_queue.heapify(edges)
+            if j not in seen: edges.append((inf, i, j))
+    edges_queue.heapify(edges)
+    while edges_queue.size > 0:
+        new_node = edges_queue.pop()
+        
+
     print(f"Queue: {edges_queue.heap} \n \n Min Tree: {min_tree}")
 
 if __name__ == "__main__":
     import doctest
     doctest.testmod()
+
+# for i in graph[current_node[1]]:
+#     weight = graph[current_node[1]][i]
+#     #print(f"{i}, {current_node[1]}, {weight}")
+#     if i in edges_queue and weight<current_node[0]:

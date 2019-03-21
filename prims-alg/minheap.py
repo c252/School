@@ -7,7 +7,7 @@ A simple min heap implementation.
 I was not satisfied with my previous implementation
 so I am rewriting it for this project
 This is based on Jim's code for min heap
-as well as the article I linked on InteractivePython
+as well as the InteractivePython article I linked
 """
 class MinHeap():
     """
@@ -74,7 +74,7 @@ class MinHeap():
     	self.prcup(self.size)
 
     def pop(self):
-        if self.size == 1:
+        if self.size == 0:
             return None
         result = self.heap[1]
         self.heap[1] = self.heap[self.size]
@@ -91,6 +91,14 @@ class MinHeap():
             self.prcdown(i)
             i -= 1
 
+    def __contains__(self, name):
+        for i in range(1, len(self.heap) + 1):
+            if self.heap[i][1:] == name:
+                return True
+            if self.heap[i][1:] == name[::-1]:
+                return True
+        return False
+
     def decrease_key(self, name, value):
         """
         Find a node and decrease its value
@@ -98,18 +106,21 @@ class MinHeap():
         """
         found = False #have we found the node we are looking for yet?
         key = 0
-        for i in range(self.size + 1):
+        i = 1 #have to start at 1 since we have the padding the the heap list
+        while found == False and i <= self.size:
             print(self.heap[i])
-            # if found == True:
-            #     break
-            # if self.heap[i][1] == name[0] and self.heap[i][2] == name[1]:
-            #     found = True
-            #     key = i
-            # else:
-            #     i += 1
+            #the long if statement is to make when searching the heap ('A', 'B') == ('B', 'A')
+            #Because in the main algorithm we only heapify the edge once
+            if (self.heap[i][1] == name[0]) or (self.heap[i][1] == name[1]):
+                if (self.heap[i][2] == name[0]) or (self.heap[i][2] == name[1]):
+                    found = True
+                    key = i
+            else:
+                i += 1
         
         if key > 0:
-            self.heap[key][0] = value
+            #a tiny bit messy since tuples are immutable
+            self.heap[key] = tuple([value, self.heap[key][1], self.heap[key][2]])
             self.prcup(key)
 
 if __name__ == "__main__":
