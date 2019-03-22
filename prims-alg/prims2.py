@@ -98,6 +98,7 @@ def prims(graph, start):
     while edges_queue.size > 0:
         new_node = edges_queue.pop()
         
+        
 
     print(f"Queue: {edges_queue.heap} \n \n Min Tree: {min_tree}")
 
