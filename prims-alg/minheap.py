@@ -108,7 +108,7 @@ class MinHeap():
         key = 0
         i = 1 #have to start at 1 since we have the padding the the heap list
         while found == False and i <= self.size:
-            print(self.heap[i])
+            #print(self.heap[i])
             #the long if statement is to make when searching the heap ('A', 'B') == ('B', 'A')
             #Because in the main algorithm we only heapify the edge once
             if (self.heap[i][1] == name[0]) or (self.heap[i][1] == name[1]):

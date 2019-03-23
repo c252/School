@@ -76,12 +76,14 @@ def min_edge(queue):
     for i in queue:
         if i[0] < minim[0]:
             minim = i
+    #ToDo Rewrite remove as to show it's proper big O
+    queue.remove(minim)
     return minim
 
 def prims(graph, start):
     inf = float("inf")#the initial distances of the edges is set to infinity in prim's algorithm
     min_tree = {}
-    edges_queue = MinHeap()
+    #edges_queue = MinHeap()
     #a bit of an awkward way to make sure we don't up using the same edge twice like (5, A, B) and (5, B, A)
     seen = {}
     edges = []
@@ -90,10 +92,15 @@ def prims(graph, start):
         for j in graph[i]:
             if j not in seen: 
                 edges.append((inf, i , j))
-    edges_queue.heapify(edges)
 
+    for i in range(len(edges)):
+        if start in edges[i][1:]:
+            print(edges[i][1],edges[i][2])
+            edges[i] = tuple([graph[edges[i][1]][edges[i][2]], edges[i][1], edges[i][2]])
     
-    print(f"Queue: {edges_queue.heap}, LENGTH:{len(edges_queue.heap)} \n \n Min Tree: {min_tree}")
+    add_edge(min_tree, min_edge(edges))
+
+    print(f"Queue: {edges}, LENGTH:{len(edges)} \n \n Min Tree: {min_tree}")
 
 if __name__ == "__main__":
     import doctest
