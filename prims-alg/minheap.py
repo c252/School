@@ -83,12 +83,6 @@ class MinHeap():
         self.prcdown(1)
         return result
 
-    def __contains__(self, name):
-        for i in self.heap:
-            if i == name:
-                return True
-        return False
-
     def heapify(self, values):
         self.size = len(values)
         self.heap = [0] + values
@@ -97,41 +91,38 @@ class MinHeap():
             self.prcdown(i)
             i -= 1
 
+    def __contains__(self, name):
+        for i in range(1, len(self.heap) + 1):
+            if self.heap[i][1:] == name:
+                return True
+            if self.heap[i][1:] == name[::-1]:
+                return True
+        return False
+
+    def decrease_key(self, name, value):
+        """
+        Find a node and decrease its value
+        a node is a tuple like this: (Weight, Node_0, Node_1)
+        """
+        found = False #have we found the node we are looking for yet?
+        key = 0
+        i = 1 #have to start at 1 since we have the padding the the heap list
+        while found == False and i <= self.size:
+            print(self.heap[i])
+            #the long if statement is to make when searching the heap ('A', 'B') == ('B', 'A')
+            #Because in the main algorithm we only heapify the edge once
+            if (self.heap[i][1] == name[0]) or (self.heap[i][1] == name[1]):
+                if (self.heap[i][2] == name[0]) or (self.heap[i][2] == name[1]):
+                    found = True
+                    key = i
+            else:
+                i += 1
+        
+        if key > 0:
+            #a tiny bit messy since tuples are immutable
+            self.heap[key] = tuple([value, self.heap[key][1], self.heap[key][2]])
+            self.prcup(key)
 
 if __name__ == "__main__":
     import doctest
     doctest.testmod()
-
-
-# #these functions were for prims2 which didn't work in the end
-#     def __contains__(self, name):
-#         for i in range(1, len(self.heap) + 1):
-#             if self.heap[i][1:] == name:
-#                 return True
-#             if self.heap[i][1:] == name[::-1]:
-#                 return True
-#         return False
-
-#     def decrease_key(self, name, value):
-#         """
-#         Find a node and decrease its value
-#         a node is a tuple like this: (Weight, Node_0, Node_1)
-#         """
-#         found = False #have we found the node we are looking for yet?
-#         key = 0
-#         i = 1 #have to start at 1 since we have the padding the the heap list
-#         while found == False and i <= self.size:
-#             print(self.heap[i])
-#             #the long if statement is to make when searching the heap ('A', 'B') == ('B', 'A')
-#             #Because in the main algorithm we only heapify the edge once
-#             if (self.heap[i][1] == name[0]) or (self.heap[i][1] == name[1]):
-#                 if (self.heap[i][2] == name[0]) or (self.heap[i][2] == name[1]):
-#                     found = True
-#                     key = i
-#             else:
-#                 i += 1
-        
-#         if key > 0:
-#             #a tiny bit messy since tuples are immutable
-#             self.heap[key] = tuple([value, self.heap[key][1], self.heap[key][2]])
-#             self.prcup(key)

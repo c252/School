@@ -14,6 +14,11 @@ graph_1 = { A : {B:6, D:4, I:9},
             I : {A:9, G:2, J:1},
             J : {I:1, G:2, H:4},
            }
+    
+graph_2 = { A: {B:5, C:2, D:1},
+            B: {A:5, C:1},
+            C: {A:2, B:1, D:2},
+            D: {A:1, C:2}}
 
 edges_1 = [(6, A, B), (4, A, C), (4, B, D), (7, C, B), (9, C, D)]
 
@@ -73,16 +78,6 @@ def min_edge(queue):
             minim = i
     return minim
 
-def dict_to_edges(dictionary, start):
-    """
-    A likely unnecessary function to convert the possible edges to add to min tree
-    into tuples. These tuples are then heapified and the smallest one is picked. 
-    """
-    result = []
-    for i in dictionary:
-        result.append((dictionary[i], i, start))
-    return result
-
 def prims(graph, start):
     inf = float("inf")#the initial distances of the edges is set to infinity in prim's algorithm
     min_tree = {}
@@ -93,13 +88,12 @@ def prims(graph, start):
     for i in graph:
         seen[i] = True
         for j in graph[i]:
-            if j not in seen: edges.append((inf, i, j))
+            if j not in seen: 
+                edges.append((inf, i , j))
     edges_queue.heapify(edges)
-    while edges_queue.size > 0:
-        new_node = edges_queue.pop()
-        #gave up here
 
-    print(f"Queue: {edges_queue.heap} \n \n Min Tree: {min_tree}")
+    
+    print(f"Queue: {edges_queue.heap}, LENGTH:{len(edges_queue.heap)} \n \n Min Tree: {min_tree}")
 
 if __name__ == "__main__":
     import doctest

@@ -19,6 +19,9 @@ class Node():
     def addEdge(self, node, weight):
         self.neighbors[node] = weight
     
+    def getName(self):
+        return self.name
+
     def delEdge(self, node):
         del self.neighbors[node]
 
@@ -27,7 +30,6 @@ class Graph():
     >>> graph_1 = Graph()
     >>> for i in [A, B, C, D, E, F]:
             graph_1.addNode(i)
-    >>>
     """
     def __init__(self):
         self.nodes = {}
