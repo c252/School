@@ -1,0 +1,38 @@
+Problems
+======
+Hi Jim, I was unable to implement the algorithm, I tried for many days, rewrote it many times, 
+changed my data structures. I just couldn't get it to work. I am really sorry for not being able to complete the project, 
+and not asking for help when I really should have.
+
+
+I still would really appreciate some help though, because I do want to get it working.
+
+Prim's algorithm explanation
+=====
+Prim's algorithms is an graph algorithm that generates a Minimum Spanning Tree.
+
+When you have a graph (a number of nodes that are connected), the graph will always
+have a tree (a connected acyclic graph) that can be embedded inside of it. So if 
+N is the set of all nodes in a graph and E is the set of edges, then the embedded tree
+will have a set of nodes M such that M = N, and a set of edges H where H ⊂ E such that
+none of the edges chosen will cause a cycle in the embedded tree. (tree.png is an example
+of what I am talking about). So the tree contains every node in the graph without creating any
+cycles (so every node has exactly one path to connect to another node).
+
+In a weighted graph, the spanning trees will also have weights. The total weight of the
+spanning tree would be defined as
+
+
+
+
+
+
+
+
+
+We need a few things to efficiently implement Prim's algorithm.
+We need to have a graph to run the algorithm on and a node to start with.
+Next we are going to need a min-heap to store all the edges of the graph,
+this makes the main operation in this algorithm (getting the smallest edge)
+an O(1) operation, if we used something like a list for this it would be much slower
+because we would have to go along the list every time to get the smallest edge, O(n).

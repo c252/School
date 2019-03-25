@@ -35,17 +35,31 @@ class Graph():
         self.nodes = {}
 
     def addNode(self, new_node):
-        self.nodes[new_node] = Node(new_node)
+        node = Node(new_node)
+        self.nodes[node] = node
+        return node
 
     def addEdge(self, node_0, node_1, weight):
         if node_0 in self.nodes:
-            self.addNode(node_0)
+            x = self.addNode(node_0)
         if node_1 in self.nodes:
-            self.addNode(node_1)
+            x = self.addNode(node_1)
         self.nodes[node_0].addEdge(self.nodes[node_1], weight) 
 
     def listNodes(self):
-        return self.nodes.keys()           
+        return self.nodes.keys()
 
     def __contains__(self, node):
         return node in self.nodes
+    
+#def prims(graph, start):
+
+g = Graph()
+for i in range(1,6):
+    g.addNode(i)
+
+g.addEdge(1,2,5)
+g.addEdge(1,3,3)
+g.addEdge(2,3,1)
+g.addEdge(1,5,7)
+g.addEdge(2,5,4)

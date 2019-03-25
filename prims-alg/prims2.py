@@ -92,13 +92,24 @@ def prims(graph, start):
         for j in graph[i]:
             if j not in seen: 
                 edges.append((inf, i , j))
-
+    
     for i in range(len(edges)):
         if start in edges[i][1:]:
-            print(edges[i][1],edges[i][2])
             edges[i] = tuple([graph[edges[i][1]][edges[i][2]], edges[i][1], edges[i][2]])
     
     add_edge(min_tree, min_edge(edges))
+
+    for current_node in list(min_tree.keys()):
+        for i in range(len(edges)):
+            if current_node in edges[i][1:]:
+                edges[i] = tuple([graph[edges[i][1]][edges[i][2]], edges[i][1], edges[i][2]])
+
+        #cycle detection
+        candidate = min(edges)
+        if candidate[1] in min_tree.keys() != candidate[0] in min_tree.keys():
+            add_edge(min_tree, candidate)
+        else:
+            edges.remove(candidate)
 
     print(f"Queue: {edges}, LENGTH:{len(edges)} \n \n Min Tree: {min_tree}")
 
@@ -106,7 +117,7 @@ if __name__ == "__main__":
     import doctest
     doctest.testmod()
 
-# for i in graph[current_node[1]]:
-#     weight = graph[current_node[1]][i]
-#     #print(f"{i}, {current_node[1]}, {weight}")
-#     if i in edges_queue and weight<current_node[0]:
+# if min(edges)[1] in min_tree.keys() or min(edges)[2] in min_tree.keys():
+#     add_edge(min_tree, min_edge(edges))
+# else:
+#     edges.remove(min(edges))
