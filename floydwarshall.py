@@ -32,7 +32,6 @@ def floydwarshall_stepcount(node_num, graph):
                 steps += 1
                 if sp[i][j] > (sp[i][k] + sp[k][j]):
                     sp[i][j] = sp[i][k] + sp[k][j]
-                    steps += 1
     return steps
 
 mat_1 = [
@@ -78,13 +77,15 @@ def random_graph(n, m):
     return adj_mat.tolist()
 
 def main():
-    w = 100
+    w = 150
     x = np.linspace(0,w)
     y = []
     for i in range(w):
         mat = random_graph(i, 30)
         y.append(floydwarshall_stepcount(i, mat))
 
+    #I am not totally sure why, but my algorithm and the x**3 line
+    #don't quite match up, but the aysmptotic behavoir seems the same
     plt.yscale("log")
     plt.plot(y)
     plt.plot(x**3)
