@@ -4,11 +4,13 @@ knapsack_1_0.py
 knapsack problem using dymanic programming
 
 The way that I implmeneted the knapsack problem was with 
-a table, where the rows and columns are the items' weight and value.
+a table, where the rows are the items' weight + value and the columns are
+the current weight cutoff.
 
 The nth cell of the table will contain the best possible value when given
 the choose of all the items less than n. So if adding n to the solution makes
-the bag too heavy, we just keep the previous best solution. This gives us the
+the bag too heavy (the max weight of the knapsack is the colmns of the table), 
+we just keep the previous best solution. This gives us the
 recurrance relation:
 knapsack[i][j] = 
     if we are not over weight, add the ith item or keep the previous solution -> knapsack[]
@@ -28,8 +30,9 @@ def knapsack(items, weights, max_weight):
     for i in range(n + 1):
         for j  in range(max_weight + 1):
             #this first condition is to fill in the solutions for which we use 0 items
+            #but I initialized the array to 0 so I just pass if this condition is met
             if i == 0 or j == 0:
-                cache[i][j] = 0
+                pass
             #if the solution does not go over the weight then choose either the previous
             #solution or add the new item, depending on which will be more optimal.
             elif weights[i - 1] <= j:
