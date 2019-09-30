@@ -13,9 +13,9 @@ def mandelbrot(c, max_iter,threshold=2.0):
 def julia(z, max_iter, threshold=2.0, n=3.0, a=1.0):
     #c = -0.835 - 0.2321j
     #c = 0.285 - 0.01j
-    #c = -0.7269 + 0.1889j
+    c = -0.7269 + 0.1889j
     #c = 0.45 * 0.1428*e**(a*1j)
-    c = -1.476 + 0j
+    #c = -1.476 + 0j
     for i in range(max_iter):
         if abs(z) > threshold:
             return i
@@ -43,11 +43,11 @@ def generate_animation(w, h, max_iter, v, n):
     return pxl
 
 def main():
-    m = generate(700,700,1024,n=2.0)
+    m = generate(1000,1000, 512,n=2.0)
     m = m.T #transpose the matrix
     plt.imshow(m,cmap="gnuplot2")
     plt.axis("off")
-    plt.savefig("julia5.png", dpi=300)
+    plt.savefig("julia_wallpaper.png", dpi=500)
     # for i in range(75):
     #     m = generate_animation(150,150,68, i/12, n=5.0)
     #     m = m.T #transpose the matrix
